@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missed Revenue Calculator - Simply Easy AI Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calculator-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            max-width: 600px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .calculator-form {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .calculate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px -8px rgba(102, 126, 234, 0.4);
+        }
+
+        .results {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 15px;
+            border: 2px solid #0ea5e9;
+        }
+
+        .results.show {
+            display: block;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results h3 {
+            color: #0369a1;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #bae6fd;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #0369a1;
+        }
+
+        .result-label {
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .result-value {
+            font-weight: 600;
+            color: #dc2626;
+            font-size: 1.1rem;
+        }
+
+        .cta-section {
+            margin-top: 30px;
+            text-align: center;
+            padding: 25px;
+            background: #fef3c7;
+            border-radius: 12px;
+            border: 2px solid #f59e0b;
+        }
+
+        .cta-section h4 {
+            color: #92400e;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .cta-section p {
+            color: #78350f;
+            margin-bottom: 20px;
+        }
+
+        .contact-btn {
+            background: #f59e0b;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            background: #d97706;
+            transform: translateY(-1px);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f9fafb;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .calculator-container {
+                margin: 10px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .calculator-form {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <div class="header">
+            <h1>💰 Missed Revenue Calculator</h1>
+            <p>Discover how much money your business is losing to missed calls</p>
+        </div>
+
+        <div class="calculator-form">
+            <form id="calculatorForm">
+                <div class="form-group">
+                    <label for="weeklyCalls">Average calls per week:</label>
+                    <input type="number" id="weeklyCalls" name="weeklyCalls" min="1" max="500" required placeholder="e.g., 25">
+                </div>
+
+                <div class="form-group">
+                    <label for="missedPercentage">What percentage of calls do you typically miss?:</label>
+                    <input type="number" id="missedPercentage" name="missedPercentage" min="1" max="90" required placeholder="e.g., 30">
+                    <small style="color: #6b7280; font-size: 0.85rem; margin-top: 5px; display: block;">Enter as whole number (e.g., 30 for 30%)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="averageJob">Average job/sale value ($):</label>
+                    <input type="number" id="averageJob" name="averageJob" min="10" max="10000" required placeholder="e.g., 275">
+                </div>
+
+                <div class="form-group">
+                    <label for="conversionRate">What percentage of leads convert to paying customers?:</label>
+                    <input type="number" id="conversionRate" name="conversionRate" min="5" max="100" value="40" required placeholder="40">
+                    <small style="color: #6b7280; font-size: 0.85rem; margin-top: 5px; display: block;">Enter as whole number (e.g., 40 for 40%)</small>
+                </div>
+
+                <button type="submit" class="calculate-btn">Calculate My Lost Revenue</button>
+            </form>
+
+            <div id="results" class="results">
+                <h3>🚨 Your Missed Revenue Analysis</h3>
+                <div class="result-item">
+                    <span class="result-label">Missed calls per week:</span>
+                    <span class="result-value" id="weeklyMissed">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Potential jobs lost per week:</span>
+                    <span class="result-value" id="weeklyJobs">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Lost revenue per week:</span>
+                    <span class="result-value" id="weeklyRevenue">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Lost revenue per month:</span>
+                    <span class="result-value" id="monthlyRevenue">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Lost revenue per YEAR:</span>
+                    <span class="result-value" id="yearlyRevenue">-</span>
+                </div>
+
+                <div class="cta-section">
+                    <h4>Ready to Capture This Lost Revenue?</h4>
+                    <p>My AI Receptionist can answer every call and turn missed opportunities into booked jobs.</p>
+                    <button class="contact-btn" onclick="window.open('https://linkedin.com/in/yourprofile', '_blank')">
+                        Get Your Custom Solution →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Simply Easy AI Solutions | Helping small businesses stop losing leads and revenue</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('calculatorForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const weeklyCalls = parseInt(document.getElementById('weeklyCalls').value);
+            const missedPercentage = parseInt(document.getElementById('missedPercentage').value) / 100;
+            const averageJob = parseInt(document.getElementById('averageJob').value);
+            const conversionRate = parseInt(document.getElementById('conversionRate').value) / 100;
+            
+            // Validate inputs
+            if (missedPercentage > 1) {
+                alert('Missed percentage cannot be more than 100%');
+                return;
+            }
+            
+            // Calculate results
+            const weeklyMissed = Math.round(weeklyCalls * missedPercentage);
+            const weeklyJobs = Math.round(weeklyMissed * conversionRate);
+            const weeklyRevenue = weeklyJobs * averageJob;
+            const monthlyRevenue = Math.round(weeklyRevenue * 4.33);
+            const yearlyRevenue = weeklyRevenue * 52;
+            
+            // Format numbers as currency
+            const formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+            
+            // Update results
+            document.getElementById('weeklyMissed').textContent = weeklyMissed;
+            document.getElementById('weeklyJobs').textContent = weeklyJobs;
+            document.getElementById('weeklyRevenue').textContent = formatter.format(weeklyRevenue);
+            document.getElementById('monthlyRevenue').textContent = formatter.format(monthlyRevenue);
+            document.getElementById('yearlyRevenue').textContent = formatter.format(yearlyRevenue);
+            
+            // Show results
+            document.getElementById('results').classList.add('show');
+            
+            // Scroll to results
+            document.getElementById('results').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        });
+    </script>
+</body>
+</html>
